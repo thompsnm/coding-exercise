@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {},
   "scripts": {
-    "build": "cd client && npm install && cd ../server && npm install",
+    "install": "cd client && npm install && cd ../server && npm install",
+    "build": "cd client && npm run build",
     "start": "npm run server",
     "server": "cd server && npm start",
     "client": "cd client && npm start"
