@@ -8,6 +8,7 @@
     "build": "cd client && npm run build",
     "start": "npm run server",
     "start-dev": "npm run server-dev",
+    "reset-db": "node --env-file .env.production.local ./server/util/seed_db.js",
     "server": "cd server && npm start",
     "server-dev": "cd server && npm run start-dev",
     "client": "cd client && npm start"
