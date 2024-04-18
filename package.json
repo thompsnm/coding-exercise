@@ -8,8 +8,8 @@
     "build": "cd client && npm run build",
     "start": "npm run server",
     "start-dev": "npm run server-dev",
-    "reset-db": "node --env-file .env.production.local ./server/util/resetDb.js",
-    "reset-db-dev": "node --env-file .env.dev.local ./server/util/resetDb.js",
+    "reset-db": "cd server && npm run reset-db",
+    "reset-db-dev": "cd server && npm run reset-db-dev",
     "server": "cd server && npm start",
     "server-dev": "cd server && npm run start-dev",
     "client": "cd client && npm start"

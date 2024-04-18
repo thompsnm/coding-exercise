@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+console.log("Connecting to DB Host: " + process.env.DATABASE_HOST);
+
 const db_config = {
     user:     process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
