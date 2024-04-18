@@ -30,7 +30,7 @@ class TeaserDataParser {
             // really affect the time complexity of this operation
             if (!lineItems.has(datum.id)) {
                 lineItems.set(
-                    datum.id, 
+                    datum.id,
                     {
                         id: datum.id,
                         name: datum.line_item_name,

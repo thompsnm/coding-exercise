@@ -52,22 +52,34 @@ sequelize.define(
             //unique: true
         },
         booked_amount: {
-            // JS does not support exact decimals with the precision necessary for example data set
-            // Using string instead to maintain precision
+            // Important: JS does NOT support exact decimals with the precision necessary for arithmetic operations
+            // across numbers in the seed data set
+            //
+            // Based on some spot checking, it appears Node will be able to ingest the data correctly from the seed
+            // .json file, persist that to the database, and then recover it from the database. However, adding two
+            // numbers together will yield innacurate numbers due to rounding errors.
             // Ref: https://sequelize.org/docs/v7/models/data-types/#exact-decimal-numbers
-            type: Sequelize.STRING(31)
+            type: Sequelize.DECIMAL(31)
         },
         actual_amount: {
-            // JS does not support exact decimals with the precision necessary for example data set
-            // Using string instead to maintain precision
+            // Important: JS does NOT support exact decimals with the precision necessary for arithmetic operations
+            // across numbers in the seed data set
+            //
+            // Based on some spot checking, it appears Node will be able to ingest the data correctly from the seed
+            // .json file, persist that to the database, and then recover it from the database. However, adding two
+            // numbers together will yield innacurate numbers due to rounding errors.
             // Ref: https://sequelize.org/docs/v7/models/data-types/#exact-decimal-numbers
-            type: Sequelize.STRING(31)
+            type: Sequelize.DECIMAL(31)
         },
         adjustments: {
-            // JS does not support exact decimals with the precision necessary for example data set
-            // Using string instead to maintain precision
+            // Important: JS does NOT support exact decimals with the precision necessary for arithmetic operations
+            // across numbers in the seed data set
+            //
+            // Based on some spot checking, it appears Node will be able to ingest the data correctly from the seed
+            // .json file, persist that to the database, and then recover it from the database. However, adding two
+            // numbers together will yield innacurate numbers due to rounding errors.
             // Ref: https://sequelize.org/docs/v7/models/data-types/#exact-decimal-numbers
-            type: Sequelize.STRING(31)
+            type: Sequelize.DECIMAL(31)
         }
     }
 );
