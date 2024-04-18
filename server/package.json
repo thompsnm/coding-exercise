@@ -12,7 +12,7 @@
     "sequelize": "^6.37.3"
   },
   "scripts": {
-    "start": "node --env-file .env app.js",
+    "start": "node app.js",
     "start-dev": "nodemon --env-file .env.development.local app.js",
     "start-prod-local": "nodemon --env-file .env.production.local app.js",
     "reset-db": "node --env-file .env.production.local ./util/resetDb.js",
