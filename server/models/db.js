@@ -51,6 +51,9 @@ sequelize.define(
             // but I would double check that with a designer in an actual business setting
             //unique: true
         },
+        campaign_id: {
+            type: Sequelize.INTEGER
+        },
         booked_amount: {
             // Important: JS does NOT support exact decimals with the precision necessary for arithmetic operations
             // across numbers in the seed data set

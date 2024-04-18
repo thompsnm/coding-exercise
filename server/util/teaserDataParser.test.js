@@ -105,6 +105,7 @@ describe('TeaserDataParser', () => {
             expect(lineItems.size).toEqual(1);
             expect(lineItems.get(lineItemOne.id)).toEqual({
                 id: 1,
+                campaign_id: 1,
                 actual_amount: 401966.50504006835,
                 adjustments: 1311.0731142230268,
                 booked_amount: 430706.6871532752,
@@ -122,6 +123,7 @@ describe('TeaserDataParser', () => {
             expect(lineItems.size).toEqual(2);
             expect(lineItems.get(lineItemOne.id)).toEqual({
                 id: 1,
+                campaign_id: 1,
                 actual_amount: 401966.50504006835,
                 adjustments: 1311.0731142230268,
                 booked_amount: 430706.6871532752,
@@ -129,6 +131,7 @@ describe('TeaserDataParser', () => {
             });
             expect(lineItems.get(lineItemTwo.id)).toEqual({
                 id: 10000,
+                campaign_id: 419,
                 actual_amount: 93659.54567461848,
                 adjustments: 4368.184346036311,
                 booked_amount: 105243.85945259563,
@@ -146,6 +149,7 @@ describe('TeaserDataParser', () => {
             expect(lineItems.size).toEqual(1);
             expect(lineItems.get(lineItemOne.id)).toEqual({
                 id: 1,
+                campaign_id: 1,
                 actual_amount: 401966.50504006835,
                 adjustments: 1311.0731142230268,
                 booked_amount: 430706.6871532752,
@@ -163,6 +167,7 @@ describe('TeaserDataParser', () => {
             expect(lineItems.size).toEqual(2);
             expect(lineItems.get(lineItemTwo.id)).toEqual({
                 id: 10000,
+                campaign_id: 419,
                 actual_amount: 93659.54567461848,
                 adjustments: 4368.184346036311,
                 booked_amount: 105243.85945259563,
@@ -170,6 +175,7 @@ describe('TeaserDataParser', () => {
             });
             expect(lineItems.get(lineItemThree.id)).toEqual({
                 id: 9999,
+                campaign_id: 419,
                 actual_amount: 93659.54567461848,
                 adjustments: 4368.184346036311,
                 booked_amount: 105243.85945259563,

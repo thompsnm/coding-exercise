@@ -33,12 +33,12 @@ app.get('/campaign/:id', async (req, res) => {
 });
 
 app.get('/lineItems', async (req, res) => {
-    //let clause =
-        //!!req.query.campaign_id
-        //? { where: { campaign_id: req.query.campaign_id} }
-        //: {};
+    let clause =
+        !!req.query.campaign_id
+        ? { where: { campaign_id: req.query.campaign_id} }
+        : {};
 
-    let lineItems = await db.LineItem.findAll();
+    let lineItems = await db.LineItem.findAll(clause);
     res.send(lineItems);
 });
 

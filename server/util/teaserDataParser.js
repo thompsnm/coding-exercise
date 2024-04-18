@@ -34,6 +34,7 @@ class TeaserDataParser {
                     {
                         id: datum.id,
                         name: datum.line_item_name,
+                        campaign_id: datum.campaign_id,
                         booked_amount: datum.booked_amount,
                         actual_amount: datum.actual_amount,
                         adjustments: datum.adjustments
