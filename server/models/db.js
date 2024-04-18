@@ -1,25 +1,24 @@
 const Sequelize = require('sequelize');
 
-console.log("Connecting to DB Host: " + process.env.DATABASE_HOST);
-
-const db_config = {
-    user:     process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS,
-    host:     process.env.DATABASE_HOST,
-    database: process.env.DATABASE_NAME
-};
-
 const sequelize = new Sequelize(
-    db_config.database,
-    db_config.user,
-    db_config.password,
-    {
-        host: db_config.host,
-        dialect: 'postgres',
-        native: true,
-        timezone: 'America/Denver'
+    process.env.DATABASE_URL, {
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        }
     }
 );
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 sequelize.define(
     'Campaign',

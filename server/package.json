@@ -13,10 +13,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start-dev": "nodemon --env-file .env.development.local app.js",
-    "start-prod-local": "nodemon --env-file .env.production.local app.js",
+    "start-dev": "nodemon --env-file .env.production.local app.js",
     "reset-db": "node --env-file .env.production.local ./util/resetDb.js",
-    "reset-db-dev": "node --env-file .env.development.local ./util/resetDb.js",
     "test": "jest"
   },
   "devDependencies": {
