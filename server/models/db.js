@@ -1,13 +1,13 @@
-var Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
-var db_config = {
+const db_config = {
     user:     process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
     host:     process.env.DATABASE_HOST,
     database: process.env.DATABASE_NAME
 };
 
-var sequelize = new Sequelize(
+const sequelize = new Sequelize(
     db_config.database,
     db_config.user,
     db_config.password,
@@ -45,8 +45,7 @@ sequelize.define(
             autoIncrement: true
         },
         name: {
-            type: Sequelize.STRING,
-            unique: true
+            type: Sequelize.STRING
         },
         booked_amount: {
             // JS does not support exact decimals with the precision necessary for example data set
@@ -71,4 +70,6 @@ sequelize.define(
 
 module.exports = {
     connection: sequelize,
+    Campaign: sequelize.models.Campaign,
+    LineItem: sequelize.models.LineItem
 };
