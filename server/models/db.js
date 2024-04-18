@@ -45,7 +45,11 @@ sequelize.define(
             autoIncrement: true
         },
         name: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            // It turns out there's some data that has a different line item ID but the same name
+            // I'm going to assume that that is acceptable experience in the current data configuration
+            // but I would double check that with a designer in an actual business setting
+            //unique: true
         },
         booked_amount: {
             // JS does not support exact decimals with the precision necessary for example data set

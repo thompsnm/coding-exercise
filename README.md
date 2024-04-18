@@ -1,3 +1,8 @@
+## Decisions to Justify
+
+- Relational DB vs NoSQL
+- Storing decimal values as STRING vs DECIMAL
+
 ## Seed Database
 
 - Create a .env.production.local file with the following information:
