@@ -23,6 +23,17 @@ describe('TeaserDataParser', () => {
             "adjustments": 4368.184346036311
         };
 
+    const lineItemThree =
+        {
+            "id": 9999,
+            "campaign_id": 419,
+            "campaign_name": "Larkin, Reynolds and Ritchie : Enterprise-wide 3rd generation success - e8d6",
+            "line_item_name": "Intelligent Steel Shirt - 2d19",
+            "booked_amount": 105243.85945259563,
+            "actual_amount": 93659.54567461848,
+            "adjustments": 4368.184346036311
+        };
+
     describe('getCampaigns', () => {
         it('returns an empty Map if no data is provided', () => {
             const teaserDataParser = new TeaserDataParser([]);
@@ -139,6 +150,30 @@ describe('TeaserDataParser', () => {
                 adjustments: 1311.0731142230268,
                 booked_amount: 430706.6871532752,
                 name: "Awesome Plastic Car - 6475",
+            });
+        });
+
+        it('returns a Map with line items intact if multiple are provided with different IDs but the same name', () => {
+            const teaserDataParser = new TeaserDataParser([
+                lineItemTwo,
+                lineItemThree
+            ]);
+            const lineItems = teaserDataParser.getLineItems();
+            expect(lineItems).toBeInstanceOf(Map);
+            expect(lineItems.size).toEqual(2);
+            expect(lineItems.get(lineItemTwo.id)).toEqual({
+                id: 10000,
+                actual_amount: 93659.54567461848,
+                adjustments: 4368.184346036311,
+                booked_amount: 105243.85945259563,
+                name: "Intelligent Steel Shirt - 2d19",
+            });
+            expect(lineItems.get(lineItemThree.id)).toEqual({
+                id: 9999,
+                actual_amount: 93659.54567461848,
+                adjustments: 4368.184346036311,
+                booked_amount: 105243.85945259563,
+                name: "Intelligent Steel Shirt - 2d19",
             });
         });
     });
