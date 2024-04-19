@@ -11,7 +11,6 @@ function CampaignTable() {
             }
             const body = await response.json();
             setCampaignList(body);
-            console.log("done with API request");
         } catch (error) {
             console.error(error.message);
         }

@@ -11,9 +11,9 @@ db.connection.sync({ force: true }).then(() => {
         campaigns
     );
 
-    const lineItemsMap = teaserDataParser.getLineItems();
-    const lineItems = Array.from(lineItemsMap.values());
-    db.LineItem.bulkCreate(
-        lineItems
+    const adsMap = teaserDataParser.getAds();
+    const ads = Array.from(adsMap.values());
+    db.Ad.bulkCreate(
+        ads
     );
 });

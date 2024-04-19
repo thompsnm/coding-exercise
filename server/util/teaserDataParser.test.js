@@ -1,7 +1,7 @@
 const TeaserDataParser = require('./teaserDataParser');
 
 describe('TeaserDataParser', () => {
-    const lineItemOne =
+    const adOne =
         {
             "id": 1,
             "campaign_id": 1,
@@ -12,7 +12,7 @@ describe('TeaserDataParser', () => {
             "adjustments": 1311.0731142230268
         };
 
-    const lineItemTwo =
+    const adTwo =
         {
             "id": 10000,
             "campaign_id": 419,
@@ -23,7 +23,7 @@ describe('TeaserDataParser', () => {
             "adjustments": 4368.184346036311
         };
 
-    const lineItemThree =
+    const adThree =
         {
             "id": 9999,
             "campaign_id": 419,
@@ -44,12 +44,12 @@ describe('TeaserDataParser', () => {
 
         it('returns a Map with a parsed campaign if one is provided', () => {
             const teaserDataParser = new TeaserDataParser([
-                lineItemOne
+                adOne
             ]);
             const campaigns = teaserDataParser.getCampaigns();
             expect(campaigns).toBeInstanceOf(Map);
             expect(campaigns.size).toEqual(1);
-            expect(campaigns.get(lineItemOne.campaign_id)).toEqual({
+            expect(campaigns.get(adOne.campaign_id)).toEqual({
                 id: 1,
                 name: "Satterfield-Turcotte : Multi-channelled next generation analyzer - e550"
             });
@@ -57,17 +57,17 @@ describe('TeaserDataParser', () => {
 
         it('returns a Map with multiple parsed campaigns if multiple are provided', () => {
             const teaserDataParser = new TeaserDataParser([
-                lineItemOne,
-                lineItemTwo
+                adOne,
+                adTwo
             ]);
             const campaigns = teaserDataParser.getCampaigns();
             expect(campaigns).toBeInstanceOf(Map);
             expect(campaigns.size).toEqual(2);
-            expect(campaigns.get(lineItemOne.campaign_id)).toEqual({
+            expect(campaigns.get(adOne.campaign_id)).toEqual({
                 id: 1,
                 name: "Satterfield-Turcotte : Multi-channelled next generation analyzer - e550"
             });
-            expect(campaigns.get(lineItemTwo.campaign_id)).toEqual({
+            expect(campaigns.get(adTwo.campaign_id)).toEqual({
                 id: 419,
                 name: "Larkin, Reynolds and Ritchie : Enterprise-wide 3rd generation success - e8d6",
             });
@@ -75,35 +75,35 @@ describe('TeaserDataParser', () => {
 
         it('returns a Map with deduplicated campaigns if multiple of the same are provided', () => {
             const teaserDataParser = new TeaserDataParser([
-                lineItemOne,
-                lineItemOne
+                adOne,
+                adOne
             ]);
             const campaigns = teaserDataParser.getCampaigns();
             expect(campaigns).toBeInstanceOf(Map);
             expect(campaigns.size).toEqual(1);
-            expect(campaigns.get(lineItemOne.campaign_id)).toEqual({
+            expect(campaigns.get(adOne.campaign_id)).toEqual({
                 id: 1,
                 name: "Satterfield-Turcotte : Multi-channelled next generation analyzer - e550"
             });
         });
     });
 
-    describe('getLineItems', () => {
+    describe('getAds', () => {
         it('returns an empty Map if no data is provided', () => {
             const teaserDataParser = new TeaserDataParser([]);
-            const lineItems = teaserDataParser.getLineItems();
-            expect(lineItems).toBeInstanceOf(Map);
-            expect(lineItems.size).toEqual(0);
+            const ads = teaserDataParser.getAds();
+            expect(ads).toBeInstanceOf(Map);
+            expect(ads.size).toEqual(0);
         });
 
         it('returns a Map with a parsed campaign if one is provided', () => {
             const teaserDataParser = new TeaserDataParser([
-                lineItemOne
+                adOne
             ]);
-            const lineItems = teaserDataParser.getLineItems();
-            expect(lineItems).toBeInstanceOf(Map);
-            expect(lineItems.size).toEqual(1);
-            expect(lineItems.get(lineItemOne.id)).toEqual({
+            const ads = teaserDataParser.getAds();
+            expect(ads).toBeInstanceOf(Map);
+            expect(ads.size).toEqual(1);
+            expect(ads.get(adOne.id)).toEqual({
                 id: 1,
                 campaign_id: 1,
                 actual_amount: 401966.50504006835,
@@ -115,13 +115,13 @@ describe('TeaserDataParser', () => {
 
         it('returns a Map with multiple parsed line items if multiple are provided', () => {
             const teaserDataParser = new TeaserDataParser([
-                lineItemOne,
-                lineItemTwo
+                adOne,
+                adTwo
             ]);
-            const lineItems = teaserDataParser.getLineItems();
-            expect(lineItems).toBeInstanceOf(Map);
-            expect(lineItems.size).toEqual(2);
-            expect(lineItems.get(lineItemOne.id)).toEqual({
+            const ads = teaserDataParser.getAds();
+            expect(ads).toBeInstanceOf(Map);
+            expect(ads.size).toEqual(2);
+            expect(ads.get(adOne.id)).toEqual({
                 id: 1,
                 campaign_id: 1,
                 actual_amount: 401966.50504006835,
@@ -129,7 +129,7 @@ describe('TeaserDataParser', () => {
                 booked_amount: 430706.6871532752,
                 name: "Awesome Plastic Car - 6475",
             });
-            expect(lineItems.get(lineItemTwo.id)).toEqual({
+            expect(ads.get(adTwo.id)).toEqual({
                 id: 10000,
                 campaign_id: 419,
                 actual_amount: 93659.54567461848,
@@ -141,13 +141,13 @@ describe('TeaserDataParser', () => {
 
         it('returns a Map with deduplicated line items if multiple of the same are provided', () => {
             const teaserDataParser = new TeaserDataParser([
-                lineItemOne,
-                lineItemOne
+                adOne,
+                adOne
             ]);
-            const lineItems = teaserDataParser.getLineItems();
-            expect(lineItems).toBeInstanceOf(Map);
-            expect(lineItems.size).toEqual(1);
-            expect(lineItems.get(lineItemOne.id)).toEqual({
+            const ads = teaserDataParser.getAds();
+            expect(ads).toBeInstanceOf(Map);
+            expect(ads.size).toEqual(1);
+            expect(ads.get(adOne.id)).toEqual({
                 id: 1,
                 campaign_id: 1,
                 actual_amount: 401966.50504006835,
@@ -159,13 +159,13 @@ describe('TeaserDataParser', () => {
 
         it('returns a Map with line items intact if multiple are provided with different IDs but the same name', () => {
             const teaserDataParser = new TeaserDataParser([
-                lineItemTwo,
-                lineItemThree
+                adTwo,
+                adThree
             ]);
-            const lineItems = teaserDataParser.getLineItems();
-            expect(lineItems).toBeInstanceOf(Map);
-            expect(lineItems.size).toEqual(2);
-            expect(lineItems.get(lineItemTwo.id)).toEqual({
+            const ads = teaserDataParser.getAds();
+            expect(ads).toBeInstanceOf(Map);
+            expect(ads.size).toEqual(2);
+            expect(ads.get(adTwo.id)).toEqual({
                 id: 10000,
                 campaign_id: 419,
                 actual_amount: 93659.54567461848,
@@ -173,7 +173,7 @@ describe('TeaserDataParser', () => {
                 booked_amount: 105243.85945259563,
                 name: "Intelligent Steel Shirt - 2d19",
             });
-            expect(lineItems.get(lineItemThree.id)).toEqual({
+            expect(ads.get(adThree.id)).toEqual({
                 id: 9999,
                 campaign_id: 419,
                 actual_amount: 93659.54567461848,

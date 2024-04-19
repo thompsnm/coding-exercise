@@ -37,7 +37,7 @@ sequelize.define(
 );
 
 sequelize.define(
-    'LineItem',
+    'Ad',
     {
         id: {
             type: Sequelize.INTEGER,
@@ -91,5 +91,5 @@ sequelize.define(
 module.exports = {
     connection: sequelize,
     Campaign: sequelize.models.Campaign,
-    LineItem: sequelize.models.LineItem
+    Ad: sequelize.models.Ad
 };

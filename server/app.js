@@ -32,26 +32,25 @@ app.get('/campaign/:id', async (req, res) => {
     }
 });
 
-app.get('/lineItems', async (req, res) => {
+app.get('/ads', async (req, res) => {
     let clause =
         !!req.query.campaign_id
         ? { where: { campaign_id: req.query.campaign_id} }
         : {};
 
-    let lineItems = await db.LineItem.findAll(clause);
-    console.log(lineItems[0]);
-    res.send(lineItems);
+    let ads = await db.Ad.findAll(clause);
+    res.send(ads);
 });
 
-app.get('/lineItem/:id', async (req, res) => {
-    let lineItems = await db.LineItem.findOne({
+app.get('/ad/:id', async (req, res) => {
+    let ads = await db.Ad.findOne({
         where: { id: req.params.id }
     });
 
-    if (lineItems === null) {
+    if (ads === null) {
         res.status(404).send("Line Item not found with id: " + req.params.id);
     } else {
-        res.send(lineItems);
+        res.send(ads);
     }
 });
 

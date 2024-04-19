@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-function LineItemTable() {
-    let [lineItemList, setLineItemList] = useState([]);
+function AdTable() {
+    let [adList, setAdList] = useState([]);
 
     useEffect(async () => {
         try {
-            const response = await fetch("/lineItems");
+            const response = await fetch("/ads");
             if (!response.ok) {
                 throw new Error("Failed to fetch data");
             }
             const body = await response.json();
-            setLineItemList(body);
+            setAdList(body);
             console.log("done with API request");
         } catch (error) {
             console.error(error.message);
@@ -19,7 +19,7 @@ function LineItemTable() {
 
     return (
         <div>
-            <p>Line Items</p>
+            <p>Ads</p>
             <table>
                 <tr>
                     <th>ID</th>
@@ -28,14 +28,14 @@ function LineItemTable() {
                     <th>Actual Amount</th>
                     <th>Adjustments</th>
                 </tr>
-                {lineItemList.map((lineItem) => {
+                {adList.map((ad) => {
                     return (
                         <tr>
-                            <td>{lineItem.id}</td>
-                            <td>{lineItem.name}</td>
-                            <td>{lineItem.booked_amount}</td>
-                            <td>{lineItem.actual_amount}</td>
-                            <td>{lineItem.adjustments}</td>
+                            <td>{ad.id}</td>
+                            <td>{ad.name}</td>
+                            <td>{ad.booked_amount}</td>
+                            <td>{ad.actual_amount}</td>
+                            <td>{ad.adjustments}</td>
                         </tr>
                     )
                 })}
@@ -44,4 +44,4 @@ function LineItemTable() {
     );
 }
 
-export default LineItemTable;
+export default AdTable;

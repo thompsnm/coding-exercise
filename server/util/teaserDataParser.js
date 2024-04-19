@@ -21,15 +21,15 @@ class TeaserDataParser {
         return campaigns;
     }
 
-    getLineItems() {
-        let lineItems = new Map();
+    getAds() {
+        let ads = new Map();
 
         for(let datum of this.data) {
             // From a glance through the provided data it does not appear that there is duplication that needs
             // removal but I'm still including a deduplication check as defensive programming as it will not
             // really affect the time complexity of this operation
-            if (!lineItems.has(datum.id)) {
-                lineItems.set(
+            if (!ads.has(datum.id)) {
+                ads.set(
                     datum.id,
                     {
                         id: datum.id,
@@ -43,7 +43,7 @@ class TeaserDataParser {
             }
         }
 
-        return lineItems;
+        return ads;
     }
 }
 
