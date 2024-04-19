@@ -39,6 +39,7 @@ app.get('/lineItems', async (req, res) => {
         : {};
 
     let lineItems = await db.LineItem.findAll(clause);
+    console.log(lineItems[0]);
     res.send(lineItems);
 });
 

@@ -63,7 +63,7 @@ sequelize.define(
             // .json file, persist that to the database, and then recover it from the database. However, adding two
             // numbers together will yield innacurate numbers due to rounding errors.
             // Ref: https://sequelize.org/docs/v7/models/data-types/#exact-decimal-numbers
-            type: Sequelize.DECIMAL(31)
+            type: Sequelize.DECIMAL
         },
         actual_amount: {
             // Important: JS does NOT support exact decimals with the precision necessary for arithmetic operations
@@ -73,7 +73,7 @@ sequelize.define(
             // .json file, persist that to the database, and then recover it from the database. However, adding two
             // numbers together will yield innacurate numbers due to rounding errors.
             // Ref: https://sequelize.org/docs/v7/models/data-types/#exact-decimal-numbers
-            type: Sequelize.DECIMAL(31)
+            type: Sequelize.DECIMAL
         },
         adjustments: {
             // Important: JS does NOT support exact decimals with the precision necessary for arithmetic operations
@@ -83,7 +83,7 @@ sequelize.define(
             // .json file, persist that to the database, and then recover it from the database. However, adding two
             // numbers together will yield innacurate numbers due to rounding errors.
             // Ref: https://sequelize.org/docs/v7/models/data-types/#exact-decimal-numbers
-            type: Sequelize.DECIMAL(31)
+            type: Sequelize.DECIMAL
         }
     }
 );
