@@ -1,20 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Root from './routes/root';
+import Root, { loader as rootLoader } from './routes/root';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./error-page";
+import Campaign from './routes/campaign';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
+    loader: rootLoader,
   },
+  {
+    path: "campaign/:campaignId",
+    element: <Campaign />
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
