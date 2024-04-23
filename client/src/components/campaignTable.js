@@ -32,7 +32,7 @@ function CampaignTable() {
                 <tbody>
                     {campaignList.map((campaign) => {
                         return (
-                            <tr>
+                            <tr key={campaign.id}>
                                 <td>{campaign.id}</td>
                                 <td>{campaign.name}</td>
                             </tr>

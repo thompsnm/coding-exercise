@@ -1,8 +1,50 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, cleanup, act } from '@testing-library/react';
 import Root from './root';
 
-test('renders learn react link', () => {
-  render(<Root />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('Root', () => {
+  
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+
+  it('renders the campaigns from the API', async () => {
+    fetchMock.mockResponse(JSON.stringify([
+      {
+        "id":1,
+        "name":"Satterfield-Turcotte : Multi-channelled next generation analyzer - e550",
+        "createdAt":"2024-04-19T03:45:59.045Z",
+        "updatedAt":"2024-04-19T03:45:59.045Z"
+      }
+    ]));
+    await act(async () => {
+      render(<Root />);
+    });
+
+    waitFor(() => expect(fetchMock).toBeCalledTimes(1));
+
+    const rowCount = screen.getAllByRole("row");
+    expect(rowCount.length).toEqual(2);
+
+    const idCell = screen.getByRole("cell", {name: 1});
+    expect(idCell).toBeInTheDocument();
+
+    const nameCell = screen.getByRole("cell", {name: "Satterfield-Turcotte : Multi-channelled next generation analyzer - e550"});
+    expect(nameCell).toBeInTheDocument();
+  });
+
+  it('renders an empty campaigns table if an empty data set is returned from the API', async () => {
+    fetchMock.mockResponse(JSON.stringify([]));
+    await act(async () => {
+      render(<Root />);
+    });
+
+    waitFor(() => expect(fetchMock).toBeCalledTimes(1));
+
+    const rowCount = screen.getAllByRole("row");
+    expect(rowCount.length).toEqual(1);
+  });
 });

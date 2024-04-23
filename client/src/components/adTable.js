@@ -36,7 +36,7 @@ function AdTable() {
                 <tbody>
                     {adList.map((ad) => {
                         return (
-                            <tr>
+                            <tr key={ad.id}>
                                 <td>{ad.id}</td>
                                 <td>{ad.name}</td>
                                 <td>{ad.booked_amount}</td>

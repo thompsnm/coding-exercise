@@ -28,7 +28,6 @@ function Root() {
         <h1 className="App-title">Welcome to React</h1>
         <p style={{ color: "white" }}>{data}</p>
         <CampaignTable />
-        <AdTable />
       </header>
     </div>
   );
