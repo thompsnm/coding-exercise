@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3500;
 const db = require('./models/db');
 const qs = require('qs');
+const { INTEGER } = require('sequelize');
 
 // Serve any static files
 app.use(express.static(path.join(__dirname, '../client/build')));
@@ -21,37 +22,45 @@ app.get('/api/campaigns', async (req, res) => {
 });
 
 app.get('/api/campaign/:id', async (req, res) => {
+    if (isNaN(parseInt(req.params.id, 10))) {
+        return res.status(400).send("Id must be of type INTEGER, " + typeof req.params.id + " found.")
+    }
+
     let campaign = await db.Campaign.findOne({
         where: { id: req.params.id }
     });
+    const status = campaign !== null ? 200 : 404;
 
-    if (campaign === null) {
-        res.status(404).send("Campaign not found with id: " + req.params.id);
-    } else {
-        res.send(campaign);
-    }
+    res.status(status).send(campaign);
 });
 
 app.get('/api/ads', async (req, res) => {
+    if (!!req.query.campaign_id && isNaN(parseInt(req.query.campaign_id, 10))) {
+        return res.status(400).send("Campaign id must be a number");
+    }
+
     let clause =
         !!req.query.campaign_id
         ? { where: { campaign_id: req.query.campaign_id} }
         : {};
 
     let ads = await db.Ad.findAll(clause);
-    res.send(ads);
+    const status = ads.length > 0 ? 200 : 404;
+
+    res.status(status).send(ads);
 });
 
 app.get('/api/ad/:id', async (req, res) => {
-    let ads = await db.Ad.findOne({
+    if (isNaN(parseInt(req.params.id, 10))) {
+        return res.status(400).send("Ad id must be a number")
+    }
+
+    let ad = await db.Ad.findOne({
         where: { id: req.params.id }
     });
+    const status = ad !== null ? 200 : 404;
 
-    if (ads === null) {
-        res.status(404).send("Line Item not found with id: " + req.params.id);
-    } else {
-        res.send(ads);
-    }
+    res.status(status).send(ad);
 });
 
 // Handle React routing, return all requests to React app
