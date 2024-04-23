@@ -21,7 +21,7 @@ export async function loader({ params }) {
     }
 }
 
-export default function Campaign(params) {
+export default function Campaign() {
     const { campaignId, initialAds } = useLoaderData();
     let [ads, setAds] = useState(initialAds);
 
