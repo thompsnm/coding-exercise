@@ -6,7 +6,7 @@ function CampaignTable() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch("/campaigns");
+                const response = await fetch("/api/campaigns");
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }

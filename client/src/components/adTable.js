@@ -6,7 +6,7 @@ function AdTable() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch("/ads");
+                const response = await fetch("/api/ads");
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }

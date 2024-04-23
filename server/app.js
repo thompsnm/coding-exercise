@@ -15,12 +15,12 @@ app.get('/api', (req, res) => {
     res.send({ message: 'Hello from Express!' });
 });
 
-app.get('/campaigns', async (req, res) => {
+app.get('/api/campaigns', async (req, res) => {
     let campaigns = await db.Campaign.findAll();
     res.send(campaigns);
 });
 
-app.get('/campaign/:id', async (req, res) => {
+app.get('/api/campaign/:id', async (req, res) => {
     let campaign = await db.Campaign.findOne({
         where: { id: req.params.id }
     });
@@ -32,7 +32,7 @@ app.get('/campaign/:id', async (req, res) => {
     }
 });
 
-app.get('/ads', async (req, res) => {
+app.get('/api/ads', async (req, res) => {
     let clause =
         !!req.query.campaign_id
         ? { where: { campaign_id: req.query.campaign_id} }
@@ -42,7 +42,7 @@ app.get('/ads', async (req, res) => {
     res.send(ads);
 });
 
-app.get('/ad/:id', async (req, res) => {
+app.get('/api/ad/:id', async (req, res) => {
     let ads = await db.Ad.findOne({
         where: { id: req.params.id }
     });
