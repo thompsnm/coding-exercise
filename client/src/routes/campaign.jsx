@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
+import CampaignDetails from "../components/campaignDetails";
 
 export async function loader({ params }) {
     try {
@@ -10,51 +11,33 @@ export async function loader({ params }) {
         const body = await response.json();
         return {
             campaignId: params.campaignId,
+            detailsFound: true,
             initialAds: body,
         };
     } catch (error) {
         console.error(error.message);
         return {
             campaignId: params.campaignId,
+            detailsFound: false,
             initialAds: [],
         };
     }
 }
 
 export default function Campaign() {
-    const { campaignId, initialAds } = useLoaderData();
+    const { campaignId, detailsFound, initialAds } = useLoaderData();
     let [ads, setAds] = useState(initialAds);
+
+    let details = detailsFound
+        ? <CampaignDetails initialAds={ ads } />
+        : <p>No details found for this campaign!</p>
 
     return (
         <div>
             <header>
                 <h1>Campaign {campaignId}</h1>
             </header>
-            <p>Ads</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Booked Amount</th>
-                        <th>Actual Amount</th>
-                        <th>Adjustments</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {ads.map((ad) => {
-                        return (
-                            <tr key={ad.id}>
-                                <td>{ad.id}</td>
-                                <td>{ad.name}</td>
-                                <td>{ad.booked_amount}</td>
-                                <td>{ad.actual_amount}</td>
-                                <td>{ad.adjustments}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+            {details}
         </div>
     );
 }
