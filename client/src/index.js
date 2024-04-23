@@ -8,7 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./error-page";
-import Campaign from './routes/campaign';
+import Campaign, { loader as campaignLoader } from './routes/campaign';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,8 @@ const router = createBrowserRouter([
   },
   {
     path: "campaign/:campaignId",
-    element: <Campaign />
+    element: <Campaign />,
+    loader: campaignLoader,
   }
 ]);
 
