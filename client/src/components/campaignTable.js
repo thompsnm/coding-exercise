@@ -3,35 +3,42 @@ import React, { useState, useEffect } from "react";
 function CampaignTable() {
     let [campaignList, setCampaignList] = useState([]);
 
-    useEffect(async () => {
-        try {
-            const response = await fetch("/campaigns");
-            if (!response.ok) {
-                throw new Error("Failed to fetch data");
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch("/campaigns");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+                const body = await response.json();
+                setCampaignList(body);
+            } catch (error) {
+                console.error(error.message);
             }
-            const body = await response.json();
-            setCampaignList(body);
-        } catch (error) {
-            console.error(error.message);
         }
+        fetchData();
     }, []);
 
     return (
         <div>
             <p>Campaigns</p>
             <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                </tr>
-                {campaignList.map((campaign) => {
-                    return (
-                        <tr>
-                            <td>{campaign.id}</td>
-                            <td>{campaign.name}</td>
-                        </tr>
-                    )
-                })}
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {campaignList.map((campaign) => {
+                        return (
+                            <tr>
+                                <td>{campaign.id}</td>
+                                <td>{campaign.name}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
             </table>
         </div>
     );
