@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 
 export async function loader() {
   try {
@@ -28,6 +28,8 @@ export default function Root() {
             <tr>
               <th>ID</th>
               <th>Name</th>
+              <th>Details Page</th>
+              <th>Invoice Page</th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +38,12 @@ export default function Root() {
                 <tr key={campaign.id}>
                   <td>{campaign.id}</td>
                   <td>{campaign.name}</td>
+                  <td>
+                    <Link to={`campaign/${campaign.id}`}>Details</Link>
+                  </td>
+                  <td>
+                    <p>TODO: Invoice</p>
+                  </td>
                 </tr>
               )
             })}
