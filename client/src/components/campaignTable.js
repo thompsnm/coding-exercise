@@ -21,7 +21,6 @@ function CampaignTable() {
 
     return (
         <div>
-            <p>Campaigns</p>
             <table>
                 <thead>
                     <tr>
