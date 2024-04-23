@@ -10,7 +10,6 @@ export async function loader() {
     const body = await response.json();
     return body;
   } catch (error) {
-    console.error(error.message);
     return [];
   }
 }

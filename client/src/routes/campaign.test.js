@@ -25,7 +25,11 @@ describe('Campaign', () => {
         "createdAt":"2024-04-19T03:45:59.045Z",
         "updatedAt":"2024-04-19T03:45:59.045Z"
       }
-    ]));
+    ]),
+      {
+        status: 200
+      }
+    );
 
     const router = createMemoryRouter([
       {
@@ -62,8 +66,13 @@ describe('Campaign', () => {
     expect(adjustmentsCell).toBeInTheDocument();
   });
 
-  it('renders an empty ads table if an empty data set is returned from the API', async () => {
-    fetchMock.mockResponse(JSON.stringify([]));
+  it('renders a message if the details can not be fetched from the API', async () => {
+    fetchMock.mockResponse(
+      JSON.stringify([]),
+      {
+        status: 404
+      }
+    );
 
     const router = createMemoryRouter([
       {
@@ -81,7 +90,7 @@ describe('Campaign', () => {
 
     waitFor(() => expect(fetchMock).toBeCalledTimes(1));
 
-    const rowCount = screen.getAllByRole("row");
-    expect(rowCount.length).toEqual(1);
+    const noDetailsMessage = screen.getByText("No details found for this campaign!");
+    expect(noDetailsMessage).toBeInTheDocument();
   });
 });

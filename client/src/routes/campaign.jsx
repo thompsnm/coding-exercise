@@ -15,7 +15,6 @@ export async function loader({ params }) {
             initialAds: body,
         };
     } catch (error) {
-        console.error(error.message);
         return {
             campaignId: params.campaignId,
             detailsFound: false,

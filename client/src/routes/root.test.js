@@ -24,7 +24,11 @@ describe('Root', () => {
         "createdAt":"2024-04-19T03:45:59.045Z",
         "updatedAt":"2024-04-19T03:45:59.045Z"
       }
-    ]));
+    ]),
+      {
+        status: 200
+      }
+    );
 
     const router = createMemoryRouter([
       {
@@ -53,7 +57,12 @@ describe('Root', () => {
   });
 
   it('renders an empty campaigns table if an empty data set is returned from the API', async () => {
-    fetchMock.mockResponse(JSON.stringify([]));
+    fetchMock.mockResponse(
+      JSON.stringify([]),
+      {
+        status: 404
+      }
+    );
 
     const router = createMemoryRouter([
       {
