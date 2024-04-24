@@ -41,7 +41,7 @@ app.get('/api/campaign/:id/invoice', async (req, res) => {
 
     let ads = await db.Ad.findAll({ where: { campaign_id: req.params.id} });
     if (ads.length === 0) {
-        return res.status(404).send(null);
+        return res.status(404).send({});
     }
 
     const invoice = {
