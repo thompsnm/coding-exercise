@@ -41,7 +41,7 @@ export default function Root() {
                     <Link to={`campaign/${campaign.id}`}>Details</Link>
                   </td>
                   <td>
-                    <p>TODO: Invoice</p>
+                    <Link to={`campaign/${campaign.id}/invoice`}>Invoice</Link>
                   </td>
                 </tr>
               )
