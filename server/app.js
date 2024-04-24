@@ -23,7 +23,7 @@ app.get('/api/campaigns', async (req, res) => {
 
 app.get('/api/campaign/:id', async (req, res) => {
     if (isNaN(parseInt(req.params.id, 10))) {
-        return res.status(400).send("Id must be of type INTEGER, " + typeof req.params.id + " found.")
+        return res.status(400).send("Campaign id must be a number");
     }
 
     let campaign = await db.Campaign.findOne({
@@ -36,7 +36,7 @@ app.get('/api/campaign/:id', async (req, res) => {
 
 app.get('/api/campaign/:id/invoice', async (req, res) => {
     if (isNaN(parseInt(req.params.id, 10))) {
-        return res.status(400).send("Id must be of type INTEGER, " + typeof req.params.id + " found.")
+        return res.status(400).send("Campaign id must be a number");
     }
 
     let ads = await db.Ad.findAll({ where: { campaign_id: req.params.id} });
@@ -45,9 +45,9 @@ app.get('/api/campaign/:id/invoice', async (req, res) => {
     }
 
     const invoice = {
-        campaignId: req.params.id,
-        bookedAmount: 0,
-        actualAmount: 0,
+        campaign_id: req.params.id,
+        booked_amount: 0,
+        actual_amount: 0,
         adjustments: 0,
     }
 
@@ -58,8 +58,8 @@ app.get('/api/campaign/:id/invoice', async (req, res) => {
     // .json file, persist that to the database, and then recover it from the database. However, numbers
     // with precision greater than 16 appear to be rounded during addition.
     ads.forEach((ad) => {
-        invoice.bookedAmount += parseFloat(ad.booked_amount);
-        invoice.actualAmount += parseFloat(ad.actual_amount);
+        invoice.booked_amount += parseFloat(ad.booked_amount);
+        invoice.actual_amount += parseFloat(ad.actual_amount);
         invoice.adjustments += parseFloat(ad.adjustments);
     });
 

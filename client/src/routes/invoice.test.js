@@ -17,8 +17,8 @@ describe('Invoice', () => {
   it('renders the ads from the API', async () => {
     fetchMock.mockResponse(JSON.stringify({
       "campaignId":1,
-      "bookedAmount": "430706.6871532752",
-      "actualAmount": "401966.50504006835",
+      "booked_amount": "430706.6871532752",
+      "actual_amount": "401966.50504006835",
       "adjustments": "1311.0731142230268",
     }),
     {

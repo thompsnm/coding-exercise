@@ -1,35 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
-export default function CampaignDetails({ initialAds }) {
-    let [ads, setAds] = useState(initialAds);
-
+export default function CampaignDetails({ campaignDetails }) {
     return (
         <div>
-            <p>Ads</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Booked Amount</th>
-                        <th>Actual Amount</th>
-                        <th>Adjustments</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {ads.map((ad) => {
-                        return (
-                            <tr key={ad.id}>
-                                <td>{ad.id}</td>
-                                <td>{ad.name}</td>
-                                <td>{ad.booked_amount}</td>
-                                <td>{ad.actual_amount}</td>
-                                <td>{ad.adjustments}</td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+            <p>ID: { campaignDetails.campaignId }</p>
+            <p>Name: { campaignDetails.campaignName }</p>
+            <Link to={`invoice`}>Invoice</Link>
         </div>
     );
 }
