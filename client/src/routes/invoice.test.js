@@ -16,7 +16,7 @@ describe('Invoice', () => {
 
   it('renders the ads from the API', async () => {
     fetchMock.mockResponse(JSON.stringify({
-      "campaignId":1,
+      "campaign_id":1,
       "booked_amount": "430706.6871532752",
       "actual_amount": "401966.50504006835",
       "adjustments": "1311.0731142230268",
@@ -41,13 +41,16 @@ describe('Invoice', () => {
 
     waitFor(() => expect(fetchMock).toBeCalledTimes(1));
 
-    const bookedAmountCell = screen.getByText(/430706.6871532752/);
+    const idCell = screen.getByText(/Campaign ID: 1/);
+    expect(idCell).toBeInTheDocument();
+
+    const bookedAmountCell = screen.getByText(/Booked Amount: 430706.6871532752/);
     expect(bookedAmountCell).toBeInTheDocument();
 
-    const actualAmountCell = screen.getByText(/401966.50504006835/);
+    const actualAmountCell = screen.getByText(/Actual Amount: 401966.50504006835/);
     expect(actualAmountCell).toBeInTheDocument();
 
-    const adjustmentsCell = screen.getByText(/1311.0731142230268/);
+    const adjustmentsCell = screen.getByText(/Adjustments: 1311.0731142230268/);
     expect(adjustmentsCell).toBeInTheDocument();
   });
 
