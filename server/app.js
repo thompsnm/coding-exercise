@@ -34,6 +34,38 @@ app.get('/api/campaign/:id', async (req, res) => {
     res.status(status).send(campaign);
 });
 
+app.get('/api/campaign/:id/invoice', async (req, res) => {
+    if (isNaN(parseInt(req.params.id, 10))) {
+        return res.status(400).send("Id must be of type INTEGER, " + typeof req.params.id + " found.")
+    }
+
+    let ads = await db.Ad.findAll({ where: { campaign_id: req.params.id} });
+    if (ads.length === 0) {
+        return res.status(404).send(null);
+    }
+
+    const invoice = {
+        campaignId: req.params.id,
+        bookedAmount: 0,
+        actualAmount: 0,
+        adjustments: 0,
+    }
+
+    // Important: JS does NOT support exact decimals with the precision necessary for arithmetic operations
+    // across numbers in the seed data set
+    //
+    // Based on some spot checking, it appears Node is able to ingest the data correctly from the seed
+    // .json file, persist that to the database, and then recover it from the database. However, numbers
+    // with precision greater than 16 appear to be rounded during addition.
+    ads.forEach((ad) => {
+        invoice.bookedAmount += parseFloat(ad.booked_amount);
+        invoice.actualAmount += parseFloat(ad.actual_amount);
+        invoice.adjustments += parseFloat(ad.adjustments);
+    });
+
+    res.status(200).send(invoice);
+});
+
 app.get('/api/ads', async (req, res) => {
     if (!!req.query.campaign_id && isNaN(parseInt(req.query.campaign_id, 10))) {
         return res.status(400).send("Campaign id must be a number");

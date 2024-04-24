@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import ErrorPage from "./error-page";
 import Campaign, { loader as campaignLoader } from './routes/campaign';
+import Invoice, { loader as invoiceLoader } from './routes/invoice';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,12 @@ const router = createBrowserRouter([
     path: "campaign/:campaignId",
     element: <Campaign />,
     loader: campaignLoader,
-  }
+  },
+  {
+    path: "campaign/:campaignId/invoice",
+    element: <Invoice />,
+    loader: invoiceLoader,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
