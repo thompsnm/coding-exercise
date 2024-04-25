@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function AdsList({ initialAds }) {
     let [ads, setAds] = useState(initialAds);
@@ -14,6 +15,7 @@ export default function AdsList({ initialAds }) {
                         <th>Booked Amount</th>
                         <th>Actual Amount</th>
                         <th>Adjustments</th>
+                        <th>Details Page</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +27,9 @@ export default function AdsList({ initialAds }) {
                                 <td>{ad.booked_amount}</td>
                                 <td>{ad.actual_amount}</td>
                                 <td>{ad.adjustments}</td>
+                                <td>
+                                    <Link to={`/ad/${ad.id}`}>Details</Link>
+                                </td>
                             </tr>
                         )
                     })}

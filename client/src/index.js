@@ -10,6 +10,7 @@ import {
 import ErrorPage from "./error-page";
 import Campaign, { loader as campaignLoader } from './routes/campaign';
 import Invoice, { loader as invoiceLoader } from './routes/invoice';
+import Ad, { loader as adLoader } from './routes/ad';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
     path: "campaign/:campaignId/invoice",
     element: <Invoice />,
     loader: invoiceLoader,
+  },
+  {
+    path: "ad/:adId",
+    element: <Ad />,
+    loader: adLoader,
   },
 ]);
 

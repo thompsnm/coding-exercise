@@ -3,28 +3,22 @@ import { useLoaderData } from "react-router-dom";
 import InvoiceDetails from "../components/invoiceDetails";
 
 export async function loader({ params }) {
-    try {
-        const response = await fetch(`/api/campaign/${params.campaignId}/invoice`);
-        if (!response.ok) {
-            throw new Error("Failed to fetch data");
-        }
-        const body = await response.json();
-        return {
-            campaignId: params.campaignId,
-            detailsFound: true,
-            invoiceDetails: body,
-        };
-    } catch (error) {
-        return {
-            campaignId: params.campaignId,
-            detailsFound: false,
-            invoiceDetails: {},
-        };
+    const data = {
+        detailsFound: false,
+        invoiceDetails: {},
+    };
+
+    const detailsResponse = await fetch(`/api/campaign/${params.campaignId}/invoice`);
+    if (detailsResponse.ok) {
+        data.detailsFound = true;
+        data.invoiceDetails = await detailsResponse.json();
     }
+
+    return data;
 }
 
 export default function Invoice() {
-    const { campaignId, detailsFound, invoiceDetails } = useLoaderData();
+    const { detailsFound, invoiceDetails } = useLoaderData();
 
     let details = detailsFound
         ? <InvoiceDetails invoiceDetails={ invoiceDetails } />
@@ -33,7 +27,7 @@ export default function Invoice() {
     return (
         <div>
             <header>
-                <h1>Campaign {campaignId} Invoice</h1>
+                <h1>Campaign Invoice</h1>
             </header>
             {details}
         </div>
