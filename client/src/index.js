@@ -10,7 +10,10 @@ import {
 import ErrorPage from "./error-page";
 import Campaign, { loader as campaignLoader } from './routes/campaign';
 import Invoice, { loader as invoiceLoader } from './routes/invoice';
-import Ad, { loader as adLoader } from './routes/ad';
+import Ad, {
+  loader as adLoader,
+  action as adAction,
+} from './routes/ad';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +36,7 @@ const router = createBrowserRouter([
     path: "ad/:adId",
     element: <Ad />,
     loader: adLoader,
+    action: adAction,
   },
 ]);
 

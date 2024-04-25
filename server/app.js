@@ -5,9 +5,15 @@ const port = process.env.PORT || 3500;
 const db = require('./models/db');
 const qs = require('qs');
 const { INTEGER } = require('sequelize');
+const bodyParser = require('body-parser')
 
 // Serve any static files
 app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Parse query parameters
 app.set('query parser', function (str) {
     return qs.parse(str);
 });
@@ -93,6 +99,27 @@ app.get('/api/ad/:id', async (req, res) => {
     const status = ad !== null ? 200 : 404;
 
     res.status(status).send(ad);
+});
+
+app.post('/api/ad/:id', async (req, res) => {
+    if (isNaN(parseInt(req.params.id, 10))) {
+        return res.status(400).send("Ad id must be a number")
+    }
+
+    if (isNaN(parseFloat(req.body.adjustments))) {
+        return res.status(400).send("Adjustments must be a number")
+    }
+
+    let ad = await db.Ad.findOne({
+        where: { id: req.params.id }
+    });
+
+    if (ad !== null) {
+        await ad.update({ adjustments: req.body.adjustments });
+        res.status(200).send(ad);
+    } else {
+        res.status(404).send(ad);
+    }
 });
 
 // Handle React routing, return all requests to React app
