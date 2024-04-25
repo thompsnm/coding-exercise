@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { useLoaderData, Link, Form } from "react-router-dom";
 
-// Improvement: This should really be a fetcher to allow for easy
-// POST / PUT / DELETE calls as none of those require redirects using
-// the current design. That would reduce boiler plate code across
-// the loader and action, and allow for rendering updated data without
-// making additional GET requests. The latter isn't too big of a deal
-// for this application because all pages make just one or two requests
-// so the load isn't too bad. For more complicated apps that require a
-// sprawling fan out that would be a big deal.
 export async function loader() {
   let data = [];
 
@@ -49,7 +41,7 @@ export async function action({ params, request }) {
 }
 
 export default function Root() {
-  let [campaigns, setCampaigns] = useState(useLoaderData());
+  let campaigns = useLoaderData();
 
   return (
     <div>
@@ -57,7 +49,7 @@ export default function Root() {
         <h1>Campaigns</h1>
       </header>
       <p>Create new Campaign:</p>
-      <Form method="put" action={"/"} navigate={false}>
+      <Form method="put" action={"/"}>
         <label for="name">Campaign Name</label>
         <input type="text" id="name" name="name" defaulteValue="My New Campaign" />
         <button type="submit">Create</button>
