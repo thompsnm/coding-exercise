@@ -1,17 +1,51 @@
 import React, { useState } from "react";
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link, Form } from "react-router-dom";
 
+// Improvement: This should really be a fetcher to allow for easy
+// POST / PUT / DELETE calls as none of those require redirects using
+// the current design. That would reduce boiler plate code across
+// the loader and action, and allow for rendering updated data without
+// making additional GET requests. The latter isn't too big of a deal
+// for this application because all pages make just one or two requests
+// so the load isn't too bad. For more complicated apps that require a
+// sprawling fan out that would be a big deal.
 export async function loader() {
-  try {
-    const response = await fetch("/api/campaigns");
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    const body = await response.json();
-    return body;
-  } catch (error) {
-    return [];
+  let data = [];
+
+  const response = await fetch("/api/campaigns");
+  if (response.ok) {
+    data = await response.json();
   }
+
+  return data;
+}
+
+export async function action({ params, request }) {
+    // In theory FormData should be able to be sent to the server url-encoded.
+    // However, I was having trouble getting my Express server to properly
+    // decode it from that content type. I worked around the issue by
+    // decoding the formData client side into JSON, stingifying that, and
+    // sending that over the wire.
+    let formData = Object.fromEntries(await request.formData());
+    const data = [];
+
+    const response = await fetch(
+        `/api/campaigns`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: request.method,
+            body: JSON.stringify(formData),
+        },
+    );
+
+    if (response.ok) {
+        data.detailsFound = true;
+        data.adDetails = await response.json();
+    }
+
+    return data;
 }
 
 export default function Root() {
@@ -22,32 +56,39 @@ export default function Root() {
       <header>
         <h1>Campaigns</h1>
       </header>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Details Page</th>
-              <th>Invoice Page</th>
-            </tr>
-          </thead>
-          <tbody>
-            {campaigns.map((campaign) => {
-              return (
-                <tr key={campaign.id}>
-                  <td>{campaign.id}</td>
-                  <td>{campaign.name}</td>
-                  <td>
-                    <Link to={`campaign/${campaign.id}`}>Details</Link>
-                  </td>
-                  <td>
-                    <Link to={`campaign/${campaign.id}/invoice`}>Invoice</Link>
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+      <p>Create new Campaign:</p>
+      <Form method="put" action={"/"} navigate={false}>
+        <label for="name">Campaign Name</label>
+        <input type="text" id="name" name="name" defaulteValue="My New Campaign" />
+        <button type="submit">Create</button>
+      </Form>
+      <p>Existing Campaigns:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Details Page</th>
+            <th>Invoice Page</th>
+          </tr>
+        </thead>
+        <tbody>
+          {campaigns.map((campaign) => {
+            return (
+              <tr key={campaign.id}>
+                <td>{campaign.id}</td>
+                <td>{campaign.name}</td>
+                <td>
+                  <Link to={`campaign/${campaign.id}`}>Details</Link>
+                </td>
+                <td>
+                  <Link to={`campaign/${campaign.id}/invoice`}>Invoice</Link>
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }

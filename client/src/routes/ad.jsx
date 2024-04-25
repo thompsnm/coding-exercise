@@ -2,6 +2,14 @@ import React from "react";
 import { useLoaderData, Form } from "react-router-dom";
 import AdDetails from "../components/adDetails";
 
+// Improvement: This should really be a fetcher to allow for easy
+// POST / PUT / DELETE calls as none of those require redirects using
+// the current design. That would reduce boiler plate code across
+// the loader and action, and allow for rendering updated data without
+// making additional GET requests. The latter isn't too big of a deal
+// for this application because all pages make just one or two requests
+// so the load isn't too bad. For more complicated apps that require a
+// sprawling fan out that would be a big deal.
 export async function loader({ params }) {
     const data = {
         detailsFound: false,
@@ -61,6 +69,7 @@ export default function Ad() {
                 <h1>Ad Details</h1>
             </header>
             {details}
+            <p>Update Adjustment:</p>
             <Form method="post" action={`/ad/${adDetails.id}`} navigate={false}>
                 <input type="text" name="adjustments" defaultValue={adDetails.adjustments} />
                 <button type="submit">Update</button>

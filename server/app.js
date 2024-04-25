@@ -27,6 +27,30 @@ app.get('/api/campaigns', async (req, res) => {
     res.send(campaigns);
 });
 
+app.put('/api/campaigns', async (req, res) => {
+    try {
+        // Unfortunately the initial DB insertion method I chose manually sets IDs
+        // in order to ensure they exactly match the seed data, which
+        // does not trigger the autoincrement tracking of the id in PostgreSQL.
+        // This query lets me calculate the correct next ID to specify.
+        // I'm going with this for now, but if I were to seed a DB
+        // in a work environment I would look for a method that
+        // uses the built in autoincrement feature.
+        const maxId = await db.Campaign.max('id');
+
+        const campaign = await db.Campaign.create({
+            id: maxId + 1,
+            name: req.body.name
+        });
+
+        let campaigns = await db.Campaign.findAll();
+        res.send(campaigns);
+    } catch (e) {
+        console.log(e.original);
+        res.status(400).send(e.original.detail);
+    }
+});
+
 app.get('/api/campaign/:id', async (req, res) => {
     if (isNaN(parseInt(req.params.id, 10))) {
         return res.status(400).send("Campaign id must be a number");

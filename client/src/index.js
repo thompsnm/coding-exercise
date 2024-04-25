@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Root, { loader as rootLoader } from './routes/root';
+import Root, {
+  loader as rootLoader,
+  action as rootAction,
+} from './routes/root';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -21,6 +24,7 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
+    action: rootAction,
   },
   {
     path: "campaign/:campaignId",
