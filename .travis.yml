@@ -10,4 +10,4 @@ script:
   - mkdir -p combined-coverage
   - cp client/coverage/coverage-final.json ./combined-coverage/client-coverage-final.json
   - cp server/coverage/coverage-final.json ./combined-coverage/server-coverage-final.json
-  - nyc merge combined_coverage | coveralls
+  - nyc report -t combined-coverage --reporter=text-lcov | coveralls
