@@ -79,7 +79,7 @@ export default function Ad() {
             {details}
             <p>Update Adjustment:</p>
             <Form method="post" action={`/ad/${adDetails.id}`}>
-                <input type="text" name="adjustments" defaultValue={adDetails.adjustments} />
+                <input type="text" id="new_adjustment" name="adjustments" defaultValue={adDetails.adjustments} />
                 <button type="submit">Update</button>
             </Form>
             <br />
