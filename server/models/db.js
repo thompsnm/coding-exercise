@@ -134,5 +134,7 @@ sequelize.define(
 module.exports = {
     connection: sequelize,
     Campaign: sequelize.models.Campaign,
-    Ad: sequelize.models.Ad
+    Ad: sequelize.models.Ad,
+    Campaign_Archive: sequelize.models.Campaign_Archive,
+    Ad_Archive: sequelize.models.Ad_Archive,
 };

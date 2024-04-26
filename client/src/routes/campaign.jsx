@@ -24,8 +24,6 @@ export async function loader({ params }) {
         data.ads = await adsResponse.json();
     }
 
-    console.log("in loader: ");
-    console.log(data);
     return data;
 }
 
@@ -61,22 +59,14 @@ export async function action({ params, request }) {
 export default function Campaign() {
     let { campaignId, adsFound, ads, campaignName, detailsFound } = useLoaderData();
     let campaignDetails = { campaignId, campaignName };
-    console.log(ads);
 
     let adsList = adsFound
         ? <AdsList ads={ ads } />
         : <p>No ads found for this campaign!</p>
     
     let details = detailsFound
-        ? <CampaignDetails campaignDetails={ campaignDetails } />
-        : <p>No details found for this campaign!</p>
-
-    return (
-        <div>
-            <header>
-                <h1>Campaign Details</h1>
-            </header>
-            {details}
+        ? <div>
+            <CampaignDetails campaignDetails={ campaignDetails } />
             <p>Create new Ad:</p>
             <Form method="put" action={`/campaign/${campaignId}`}>
                 <label for="name">Ad Name</label>
@@ -89,6 +79,15 @@ export default function Campaign() {
                 <input type="text" id="adjustments" name="adjustments" />
                 <button type="submit">Create</button>
             </Form>
+        </div>
+        : <p>No details found for this campaign!</p>
+
+    return (
+        <div>
+            <header>
+                <h1>Campaign Details</h1>
+            </header>
+            {details}
             {adsList}
         </div>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData, Form } from "react-router-dom";
+import { useLoaderData, Form, useNavigate } from "react-router-dom";
 import AdDetails from "../components/adDetails";
 
 export async function loader({ params }) {
@@ -50,6 +50,12 @@ export async function action({ params, request }) {
 
 export default function Ad() {
     const { detailsFound, adDetails } = useLoaderData();
+    const navigate = useNavigate();
+
+    function handleArchiveClick() {
+        navigate(`/campaign/${adDetails.campaign_id}`);
+    }
+
 
     let details = detailsFound
         ? <AdDetails adDetails={ adDetails } />

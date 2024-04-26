@@ -1,7 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AdsList({ ads }) {
+    const navigate = useNavigate();
+
+    function handleArchiveClick(adId) {
+        return async function() {
+            const response = await fetch(
+                `/api/ad/${adId}`,
+                {
+                    method: "DELETE",
+                },
+            );
+
+            if (response.ok) {
+                navigate("");
+            }
+        }
+    }
+
     return (
         <div>
             <p>Ads</p>
@@ -14,6 +31,7 @@ export default function AdsList({ ads }) {
                         <th>Actual Amount</th>
                         <th>Adjustments</th>
                         <th>Details Page</th>
+                        <th>Archive Button</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +45,9 @@ export default function AdsList({ ads }) {
                                 <td>{ad.adjustments}</td>
                                 <td>
                                     <Link to={`/ad/${ad.id}`}>Details</Link>
+                                </td>
+                                <td>
+                                    <button type="button" onClick={handleArchiveClick(ad.id)}>Archive</button>
                                 </td>
                             </tr>
                         )

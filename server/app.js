@@ -174,6 +174,36 @@ app.post('/api/ad/:id', async (req, res) => {
     }
 });
 
+app.delete('/api/ad/:id', async (req, res) => {
+    if (isNaN(parseInt(req.params.id, 10))) {
+        return res.status(400).send("Ad id must be a number")
+    }
+    try {
+        const ad = await db.Ad.findOne({
+            where: { id: req.params.id }
+        });
+
+        const adData = {
+            name: ad.dataValues.name,
+            campaign_id: ad.dataValues.campaign_id,
+            booked_amount: ad.dataValues.booked_amount,
+            actual_amount: ad.dataValues.actual_amount,
+            adjustments: ad.dataValues.adjustments,
+        }
+
+        const result = await db.connection.transaction(async (t) => {
+            await db.Ad_Archive.create(adData);
+            await ad.destroy();
+        })
+
+        res.send(ad);
+    } catch (e) {
+        console.log(`Failed to archive Ad with ID ${req.params.id}`);
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
+
 // Handle React routing, return all requests to React app
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
