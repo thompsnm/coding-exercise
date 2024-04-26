@@ -2,7 +2,6 @@
   "name": "placementsio-coding-exercise",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {},
   "scripts": {
     "install": "cd client && npm install && cd ../server && npm install",
     "build": "cd client && npm run build",
@@ -12,6 +11,10 @@
     "reset-db-dev": "cd server && npm run reset-db-dev",
     "server": "cd server && npm start",
     "server-dev": "cd server && npm run start-dev",
-    "client": "cd client && npm start"
+    "client": "cd client && npm start",
+    "test": "cd client && CI=true npm test -- --coverage && cd ../server && npm test -- --coverage"
+  },
+  "devDependencies": {
+    "coveralls-next": "^4.2.1"
   }
 }
