@@ -1,7 +1,6 @@
 ## Decisions to Justify
 
 - Relational DB vs NoSQL
-- Storing decimal values as STRING vs DECIMAL
 
 
 ## Seed Database
