@@ -85,14 +85,14 @@ export default function Campaign() {
             <CampaignDetails campaignDetails={ campaignDetails } />
             <p>Create new Ad:</p>
             <Form method="put" action={`/campaign/${campaignId}`}>
-                <label htmlFor="name">Ad Name</label>
-                <input type="text" id="name" name="name" />
-                <label htmlFor="booked_amount">Booked Amount</label>
-                <input type="text" id="booked_amount" name="booked_amount" />
-                <label htmlFor="actual_amount">Actual Amount</label>
-                <input type="text" id="actual_amount" name="actual_amount" />
-                <label htmlFor="adjustments">Adjustments</label>
-                <input type="text" id="adjustments" name="adjustments" />
+                <label htmlFor="new_campaign_name">Ad Name</label>
+                <input type="text" id="new_campaign_name" name="name" />
+                <label htmlFor="new_campaign_booked_amount">Booked Amount</label>
+                <input type="text" id="new_campaign_booked_amount" name="booked_amount" />
+                <label htmlFor="new_campaign_actual_amount">Actual Amount</label>
+                <input type="text" id="new_campaign_actual_amount" name="actual_amount" />
+                <label htmlFor="new_campaign_adjustments">Adjustments</label>
+                <input type="text" id="new_campaign_adjustments" name="adjustments" />
                 <button type="submit">Create</button>
             </Form>
         </div>
