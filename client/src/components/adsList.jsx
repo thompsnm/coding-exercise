@@ -14,7 +14,15 @@ export default function AdsList({ ads }) {
             );
 
             if (response.ok) {
+                if(window.Cypress) {
+                    // If Cypress is running a test, tell it that it needs to wait
+                    window.cypress_wait = true;
+                }
                 navigate("");
+                if(window.Cypress) {
+                    // If Cypress is running a test, tell it that it can stop waiting
+                    window.cypress_wait = false;
+                }
             }
         }
     }

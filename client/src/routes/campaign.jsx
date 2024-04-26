@@ -4,6 +4,11 @@ import AdsList from "../components/adsList";
 import CampaignDetails from "../components/campaignDetails";
 
 export async function loader({ params }) {
+    if(window.Cypress) {
+        // If Cypress is running a test, tell it that it can stop waiting
+        window.cypress_wait = false;
+    }
+
     const data = {
         campaignId: params.campaignId,
         detailsFound: false,
@@ -28,6 +33,11 @@ export async function loader({ params }) {
 }
 
 export async function action({ params, request }) {
+    if(window.Cypress) {
+        // If Cypress is running a test, tell it that it needs to wait
+        window.cypress_wait = true;
+    }
+
     // In theory FormData should be able to be sent to the server url-encoded.
     // However, I was having trouble getting my Express server to properly
     // decode it from that content type. I worked around the issue by
