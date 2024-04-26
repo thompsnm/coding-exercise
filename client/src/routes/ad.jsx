@@ -52,10 +52,20 @@ export default function Ad() {
     const { detailsFound, adDetails } = useLoaderData();
     const navigate = useNavigate();
 
-    function handleArchiveClick() {
-        navigate(`/campaign/${adDetails.campaign_id}`);
-    }
+    function handleArchiveClick(adId, campaignId) {
+        return async function() {
+            const response = await fetch(
+                `/api/ad/${adId}`,
+                {
+                    method: "DELETE",
+                },
+            );
 
+            if (response.ok) {
+                navigate(`/campaign/${campaignId}`);
+            }
+        }
+    }
 
     let details = detailsFound
         ? <AdDetails adDetails={ adDetails } />
@@ -72,6 +82,8 @@ export default function Ad() {
                 <input type="text" name="adjustments" defaultValue={adDetails.adjustments} />
                 <button type="submit">Update</button>
             </Form>
+            <br />
+            <button type="button" onClick={handleArchiveClick(adDetails.id, adDetails.campaign_id)}>Archive Ad</button>
         </div>
     );
 }
