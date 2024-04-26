@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useLoaderData, Link, Form, useNavigate } from "react-router-dom";
 
 export async function loader() {
+  if(window.Cypress) {
+    // If Cypress is running a test, tell it that it can stop waiting
+    window.cypress_wait = false;
+  }
+
   let data = [];
 
   const response = await fetch("/api/campaigns");
@@ -13,6 +18,11 @@ export async function loader() {
 }
 
 export async function action({ params, request }) {
+    if(window.Cypress) {
+        // If Cypress is running a test, tell it that it needs to wait
+        window.cypress_wait = true;
+    }
+
     // In theory FormData should be able to be sent to the server url-encoded.
     // However, I was having trouble getting my Express server to properly
     // decode it from that content type. I worked around the issue by

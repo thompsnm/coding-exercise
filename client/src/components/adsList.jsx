@@ -19,10 +19,6 @@ export default function AdsList({ ads }) {
                     window.cypress_wait = true;
                 }
                 navigate("");
-                if(window.Cypress) {
-                    // If Cypress is running a test, tell it that it can stop waiting
-                    window.cypress_wait = false;
-                }
             }
         }
     }

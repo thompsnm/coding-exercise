@@ -3,6 +3,11 @@ import { useLoaderData } from "react-router-dom";
 import InvoiceDetails from "../components/invoiceDetails";
 
 export async function loader({ params }) {
+    if(window.Cypress) {
+        // If Cypress is running a test, tell it that it can stop waiting
+        window.cypress_wait = false;
+    }
+
     const data = {
         detailsFound: false,
         invoiceDetails: {},
