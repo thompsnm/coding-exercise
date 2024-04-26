@@ -45,9 +45,11 @@ sequelize.define(
             unique: true,
             autoIncrement: true
         },
+        former_id: {
+            type: Sequelize.INTEGER,
+        },
         name: {
             type: Sequelize.STRING,
-            unique: true
         }
     }
 );
@@ -112,6 +114,9 @@ sequelize.define(
             primaryKey: true,
             unique: true,
             autoIncrement: true
+        },
+        former_id: {
+            type: Sequelize.INTEGER,
         },
         name: {
             type: Sequelize.STRING,

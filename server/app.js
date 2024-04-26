@@ -212,6 +212,7 @@ app.delete('/api/campaign/:id', async (req, res) => {
         });
 
         const campaignData = {
+            former_id: campaign.dataValues.id,
             name: campaign.dataValues.name,
         }
 
@@ -237,6 +238,7 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 
 async function archiveAd(ad) {
     const adData = {
+        former_id: ad.dataValues.id,
         name: ad.dataValues.name,
         campaign_id: ad.dataValues.campaign_id,
         booked_amount: ad.dataValues.booked_amount,

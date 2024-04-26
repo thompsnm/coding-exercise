@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoaderData, Form } from "react-router-dom";
+import { useLoaderData, Form, useNavigate } from "react-router-dom";
 import AdsList from "../components/adsList";
 import CampaignDetails from "../components/campaignDetails";
 
@@ -59,6 +59,22 @@ export async function action({ params, request }) {
 export default function Campaign() {
     let { campaignId, adsFound, ads, campaignName, detailsFound } = useLoaderData();
     let campaignDetails = { campaignId, campaignName };
+    const navigate = useNavigate();
+
+    function handleArchiveClick(campaignId) {
+        return async function() {
+            const response = await fetch(
+                `/api/campaign/${campaignId}`,
+                {
+                    method: "DELETE",
+                },
+            );
+
+            if (response.ok) {
+                navigate(`/`);
+            }
+        }
+    }
 
     let adsList = adsFound
         ? <AdsList ads={ ads } />
@@ -89,6 +105,8 @@ export default function Campaign() {
             </header>
             {details}
             {adsList}
+            <br />
+            <button type="button" onClick={handleArchiveClick(campaignId)}>Archive Campaign</button>
         </div>
     );
 }
