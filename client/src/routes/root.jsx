@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLoaderData, Link, Form } from "react-router-dom";
+import { useLoaderData, Link, Form, useNavigate } from "react-router-dom";
 
 export async function loader() {
   let data = [];
@@ -42,6 +42,22 @@ export async function action({ params, request }) {
 
 export default function Root() {
   let campaigns = useLoaderData();
+  const navigate = useNavigate();
+
+  function handleArchiveClick(campaignId) {
+    return async function() {
+      const response = await fetch(
+        `/api/campaign/${campaignId}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      if (response.ok) {
+        navigate("");
+      }
+    }
+  }
 
   return (
     <div>
@@ -62,6 +78,7 @@ export default function Root() {
             <th>Name</th>
             <th>Details Page</th>
             <th>Invoice Page</th>
+            <th>Archive Button</th>
           </tr>
         </thead>
         <tbody>
@@ -75,6 +92,9 @@ export default function Root() {
                 </td>
                 <td>
                   <Link to={`campaign/${campaign.id}/invoice`}>Invoice</Link>
+                </td>
+                <td>
+                  <button type="button" onClick={handleArchiveClick(campaign.id)}>Archive</button>
                 </td>
               </tr>
             )

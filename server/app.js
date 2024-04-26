@@ -183,20 +183,44 @@ app.delete('/api/ad/:id', async (req, res) => {
             where: { id: req.params.id }
         });
 
-        const adData = {
-            name: ad.dataValues.name,
-            campaign_id: ad.dataValues.campaign_id,
-            booked_amount: ad.dataValues.booked_amount,
-            actual_amount: ad.dataValues.actual_amount,
-            adjustments: ad.dataValues.adjustments,
+        await archiveAd(ad);
+
+        res.send(ad);
+    } catch (e) {
+        console.log(`Failed to archive Ad with ID ${req.params.id}`);
+        console.log(e);
+        res.status(500).send(e);
+    }
+});
+
+app.delete('/api/campaign/:id', async (req, res) => {
+    if (isNaN(parseInt(req.params.id, 10))) {
+        return res.status(400).send("Ad id must be a number")
+    }
+
+    try {
+        const ads = await db.Ad.findAll({
+            where: { campaign_id: req.params.id }
+        });
+
+        for (ad of ads) {
+            await archiveAd(ad);
+        }
+
+        const campaign = await db.Campaign.findOne({
+            where: { id: req.params.id }
+        });
+
+        const campaignData = {
+            name: campaign.dataValues.name,
         }
 
         const result = await db.connection.transaction(async (t) => {
-            await db.Ad_Archive.create(adData);
-            await ad.destroy();
+            await db.Campaign_Archive.create(campaignData);
+            await campaign.destroy();
         })
 
-        res.send(ad);
+        res.send(campaign);
     } catch (e) {
         console.log(`Failed to archive Ad with ID ${req.params.id}`);
         console.log(e);
@@ -210,3 +234,20 @@ app.get('*', function(req, res) {
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+async function archiveAd(ad) {
+    const adData = {
+        name: ad.dataValues.name,
+        campaign_id: ad.dataValues.campaign_id,
+        booked_amount: ad.dataValues.booked_amount,
+        actual_amount: ad.dataValues.actual_amount,
+        adjustments: ad.dataValues.adjustments,
+    }
+
+    const result = await db.connection.transaction(async (t) => {
+        await db.Ad_Archive.create(adData);
+        await ad.destroy();
+    })
+
+    return result;
+}
