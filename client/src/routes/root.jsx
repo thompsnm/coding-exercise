@@ -66,8 +66,8 @@ export default function Root() {
       </header>
       <p>Create new Campaign:</p>
       <Form method="put" action={"/"}>
-        <label htmlFor="name">Campaign Name</label>
-        <input type="text" id="name" name="name" />
+        <label htmlFor="new_campaign_name">Campaign Name</label>
+        <input type="text" id="new_campaign_name" name="name" />
         <button type="submit">Create</button>
       </Form>
       <p>Existing Campaigns:</p>
