@@ -4,11 +4,6 @@ import AdsList from "../components/adsList";
 import CampaignDetails from "../components/campaignDetails";
 
 export async function loader({ params }) {
-    if(window.Cypress) {
-        // If Cypress is running a test, tell it that it can stop waiting
-        window.cypress_wait = false;
-    }
-
     const data = {
         campaignId: params.campaignId,
         detailsFound: false,
@@ -27,6 +22,11 @@ export async function loader({ params }) {
     if (adsResponse.ok) {
         data.adsFound = true;
         data.ads = await adsResponse.json();
+    }
+
+    if(window.Cypress) {
+        // If Cypress is running a test, tell it that it can stop waiting
+        window.cypress_wait = false;
     }
 
     return data;

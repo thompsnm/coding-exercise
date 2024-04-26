@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { useLoaderData, Link, Form, useNavigate } from "react-router-dom";
 
 export async function loader() {
-  if(window.Cypress) {
-    // If Cypress is running a test, tell it that it can stop waiting
-    window.cypress_wait = false;
-  }
-
   let data = [];
 
   const response = await fetch("/api/campaigns");
   if (response.ok) {
     data = await response.json();
+  }
+
+  if(window.Cypress) {
+    // If Cypress is running a test, tell it that it can stop waiting
+    window.cypress_wait = false;
   }
 
   return data;
