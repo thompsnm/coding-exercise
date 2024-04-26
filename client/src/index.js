@@ -11,7 +11,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./error-page";
-import Campaign, { loader as campaignLoader } from './routes/campaign';
+import Campaign, {
+  loader as campaignLoader,
+  action as campaignAction,
+} from './routes/campaign';
 import Invoice, { loader as invoiceLoader } from './routes/invoice';
 import Ad, {
   loader as adLoader,
@@ -30,6 +33,7 @@ const router = createBrowserRouter([
     path: "campaign/:campaignId",
     element: <Campaign />,
     loader: campaignLoader,
+    action: campaignAction,
   },
   {
     path: "campaign/:campaignId/invoice",

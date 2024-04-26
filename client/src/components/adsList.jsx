@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function AdsList({ initialAds }) {
-    let [ads, setAds] = useState(initialAds);
-
+export default function AdsList({ ads }) {
     return (
         <div>
             <p>Ads</p>

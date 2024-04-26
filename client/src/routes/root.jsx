@@ -51,7 +51,7 @@ export default function Root() {
       <p>Create new Campaign:</p>
       <Form method="put" action={"/"}>
         <label for="name">Campaign Name</label>
-        <input type="text" id="name" name="name" defaulteValue="My New Campaign" />
+        <input type="text" id="name" name="name" />
         <button type="submit">Create</button>
       </Form>
       <p>Existing Campaigns:</p>
