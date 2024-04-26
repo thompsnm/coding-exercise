@@ -12,7 +12,7 @@
     "server": "cd server && npm start",
     "server-dev": "cd server && npm run start-dev",
     "client": "cd client && npm start",
-    "test": "cd client && CI=true npm test -- --coverage && cd ../server && npm test -- --coverage",
+    "test": "cd client && CI=true npm test -- --coverage && cd ../server && npm test -- --coverage"
   },
   "devDependencies": {
     "coveralls-next": "^4.2.1",
