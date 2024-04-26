@@ -37,6 +37,22 @@ sequelize.define(
 );
 
 sequelize.define(
+    'Campaign_Archive',
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            unique: true,
+            autoIncrement: true
+        },
+        name: {
+            type: Sequelize.STRING,
+            unique: true
+        }
+    }
+);
+
+sequelize.define(
     'Ad',
     {
         id: {
@@ -83,6 +99,33 @@ sequelize.define(
             // .json file, persist that to the database, and then recover it from the database. However, adding two
             // numbers together will yield innacurate numbers due to rounding errors.
             // Ref: https://sequelize.org/docs/v7/models/data-types/#exact-decimal-numbers
+            type: Sequelize.DECIMAL
+        }
+    }
+);
+
+sequelize.define(
+    'Ad_Archive',
+    {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            unique: true,
+            autoIncrement: true
+        },
+        name: {
+            type: Sequelize.STRING,
+        },
+        campaign_id: {
+            type: Sequelize.INTEGER
+        },
+        booked_amount: {
+            type: Sequelize.DECIMAL
+        },
+        actual_amount: {
+            type: Sequelize.DECIMAL
+        },
+        adjustments: {
             type: Sequelize.DECIMAL
         }
     }
