@@ -6,3 +6,7 @@ cache:
     - node_modules
 script:
   - npm test
+  - mkdir -p combined-coverage
+  - cp client/coverage/coverage-final.json ./combined-coverage/client-coverage-final.json
+  - cp server/coverage/coverage-final.json ./combined-coverage/server-coverage-final.json
+  - nyc merge combined_coverage | coveralls
