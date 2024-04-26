@@ -73,6 +73,11 @@ export default function Campaign() {
 
     function handleArchiveClick(campaignId) {
         return async function() {
+            if(window.Cypress) {
+                // If Cypress is running a test, tell it that it needs to wait
+                window.cypress_wait = true;
+            }
+
             const response = await fetch(
                 `/api/campaign/${campaignId}`,
                 {

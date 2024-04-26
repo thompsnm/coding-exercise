@@ -6,6 +6,11 @@ export default function AdsList({ ads }) {
 
     function handleArchiveClick(adId) {
         return async function() {
+            if(window.Cypress) {
+                // If Cypress is running a test, tell it that it needs to wait
+                window.cypress_wait = true;
+            }
+
             const response = await fetch(
                 `/api/ad/${adId}`,
                 {
@@ -14,10 +19,6 @@ export default function AdsList({ ads }) {
             );
 
             if (response.ok) {
-                if(window.Cypress) {
-                    // If Cypress is running a test, tell it that it needs to wait
-                    window.cypress_wait = true;
-                }
                 navigate("");
             }
         }
