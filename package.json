@@ -12,10 +12,12 @@
     "server": "cd server && npm start",
     "server-dev": "cd server && npm run start-dev",
     "client": "cd client && npm start",
-    "test": "cd client && CI=true npm test -- --coverage && cd ../server && npm test -- --coverage"
+    "test": "cd client && CI=true npm test -- --coverage && cd ../server && npm test -- --coverage",
+    "cy:open": "cypress open"
   },
   "devDependencies": {
     "coveralls-next": "^4.2.1",
+    "cypress": "^13.8.1",
     "nyc": "^15.1.0"
   }
 }
