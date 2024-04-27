@@ -1,6 +1,7 @@
 ## Relevant URLs
 
 This app is hosted on Heroku at: https://placementsio-coding-exercise-7a69e9cdc6e3.herokuapp.com/
+
 Coverage for the tests is recorded at: https://coveralls.io/github/thompsnm/coding-exercise
 
 ## Build / Test Instructions
@@ -77,9 +78,8 @@ to ensure it is working as expected while also saving the responses from the rea
 They then take those responses to create a mock backend that can be used to exercise the
 frontend (or other microservices). By using it to supplement or even replace the hardcoded
 mocks in the frontend tests we get the stability of a mocked backend while also ensuring the
-mocks are automatically kept up to date. Contract testing also has some really cool added
-benefits for API developers when it comes to cataloging the use of the API ahead of breaking
-changes.
+mocks are automatically kept up to date. Contract testing also has some added benefits for
+API developers when it comes to cataloging the use of the API ahead of breaking changes.
 
 ### Bucket 3
 
@@ -95,10 +95,10 @@ coverage information from both the unit tests on the server side and component t
 client side and uses `nyc` to merge everything into a unified report. This provides a pretty
 good picture of the areas I'm testing in this project, but it's missing the coverage 
 provided by Cypress. Adding that coverage to the report would be relatively straightforward
-and is [documented in Cypress' guides](https://docs.cypress.io/guides/tooling/code-coverage),
+and is documented in [Cypress' guides](https://docs.cypress.io/guides/tooling/code-coverage),
 but doing so is out of scope for this coding challenge.
 
-## Architectural Decisions to Justify
+## Architectural Decisions
 
 ### Using a relational database vs a NoSQL database
 
@@ -111,8 +111,8 @@ Node.js is ideal for microservices that are intended to accept requests and quic
 them along to other parts of the backend. That fits the structure of this project well.
 However, one issue with JavaScript in general is that
 [the JavaScript Number type is a double-precision 64-bit binary format IEEE 754 value](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number#number_encoding),
-which means it has a limit to the precission is somewhere between 15 and 17 digits. The
+which means number precission is limited to somewhere between 15 and 17 digits. The
 seed data for this project routinely uses 17 digits of precision, so the arithmetic to
 generate invoice values is typically rounded to 16 digits of precision. If the project
-required that high precision be maintained I would need to find a different language
+required that high precision be maintained I would need to bring in a different language
 to do those calculations.
