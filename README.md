@@ -6,6 +6,8 @@ Coverage for the tests is recorded at: https://coveralls.io/github/thompsnm/codi
 
 ## Build / Test Instructions
 
+This app is built and run using Node.js Version 20
+
 ### Install Dependencies
 
 ```
