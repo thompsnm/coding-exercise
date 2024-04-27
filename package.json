@@ -13,7 +13,9 @@
     "server-dev": "cd server && npm run start-dev",
     "client": "cd client && npm start",
     "test": "cd client && CI=true npm test -- --coverage && cd ../server && npm test -- --coverage",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:verify": "cypress verify"
   },
   "devDependencies": {
     "coveralls-next": "^4.2.1",

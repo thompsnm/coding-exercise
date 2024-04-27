@@ -5,8 +5,12 @@ node_js:
 cache:
   directories:
     - node_modules
+  override:
+    - npm ci
+    - npm run cy:verify
 script:
   - npm test
+  - npm run cy:run -- record
   - mkdir -p combined-coverage
   - cp client/coverage/coverage-final.json ./combined-coverage/client-coverage-final.json
   - cp server/coverage/coverage-final.json ./combined-coverage/server-coverage-final.json
